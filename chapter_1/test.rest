@@ -1,0 +1,22 @@
+
+### Its so easy to test -> due to express and extenstion "REST CLient"
+
+### Test Get /    (home endpoint)
+GET http://localhost:8080/
+
+### Test Get /dashboard endpoint
+GET http://localhost:8080/dashboard
+
+
+### Test Post /api/user
+POST http://localhost:8080/api/user
+Content-Type: application/json
+
+{
+  "name": "kaka",
+  "age": "45",
+  "city": "thailand"
+}
+
+### Test Delete /api/user
+DELETE http://localhost:8080/api/user
