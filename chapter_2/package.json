@@ -4,6 +4,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "dev" : "npx node --watch --env-file=.env ./src/server.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
