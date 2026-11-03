@@ -1,0 +1,25 @@
+
+### Get Request to home - /
+GET http://localhost:3000/
+
+
+### Auth Endpoints -/auth
+
+### post Request to /auth/register
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+  "username": "lala",
+  "password": "1234"
+}
+
+### post Request to /auth/login
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "username": "lala",
+  "password": "1234"
+}
+
