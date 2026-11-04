@@ -8,4 +8,6 @@ const adapter =new PrismaPg({ connectionString: process.env["DATABASE_URL"]! });
 
 
 // making prisma client entity/object available to the rest of the application
-export const prisma = new PrismaClient({ adapter }); // #4. creating the prisma client with the adapter
+const prisma = new PrismaClient({ adapter }); // #4. creating the prisma client with the adapter
+
+export default prisma;
