@@ -11,3 +11,26 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+
+// Model for our Schema 
+// Remember -> Industry uses Singular for model names and plural for table names
+
+model User{
+  id          Int       @id @default(autoincrement())    
+  username    String    @unique 
+  password    String    
+  todos       Todo[]
+
+  @@map("users") // This is to map the model name to the table name in the postgres database
+}
+
+model Todo{
+  id          Int       @id @default(autoincrement())
+  task        String    
+  completed   Boolean 
+  userId      Int
+  user        User      @relation(fields: [userId], references: [id])
+
+  @@map("todos") // This is to map the model name to the table name in the postgres database
+}
