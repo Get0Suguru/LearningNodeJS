@@ -1,0 +1,40 @@
+PRISMA: ONE BLUEPRINT, TWO BUILD OUTPUTS
+
+BUILD TIME: start from schema.prisma, then take TWO separate paths.
+Path A: schema -> migrate dev -> SQL migration -> PostgreSQL tables
+Path B: schema -> generate -> generated Prisma Client (code + types)
+Generating the client DOES NOT create database tables.
+Editing the schema alone changes neither tables nor existing rows.
+
+1. DESCRIBE THE SHAPE (example only; not added to your schema)
+model User {
+  id    Int    @id @default(autoincrement())
+  email String @unique
+  name  String?
+}
+User = model / default table name. A stored user = one row.
+id, email, name = columns. String? = nullable; @unique = no duplicates.
+@id = primary key. The database supplies the incrementing id.
+
+2. BUILD / EVOLVE THE DATABASE (development workflow)
+Schema change -> migrate dev -> SQL migration -> database applies SQL.
+Migration files record how tables evolve; review and keep them in Git.
+Then generate -> refresh client code/types to match your schema.
+Production applies committed migrations with migrate deploy, not dev.
+
+3. USE THE DATABASE (each request, after client setup)
+Request -> route/handler -> Prisma Client -> driver -> PostgreSQL
+Response <- handler <- JavaScript results <- database results
+await prisma.user.create({ data: { email: "a@example.com" } })
+await prisma.user.findMany({ where: { email: "a@example.com" } })
+These are still QUERIES: JS objects rather than handwritten SQL strings.
+The schema describes possible data; application code chooses what to do.
+
+CONFIG: prisma7.config.ts; exact installed version/provider still to verify.
+Config locates schema/migrations and reads DATABASE_URL for CLI commands.
+For Prisma 7 + PostgreSQL, runtime setup normally uses a driver adapter.
+The examples above assume that a Prisma Client instance is already initialized.
+Your custom config name needs an explicit --config ./prisma7.config.ts.
+
+MEMORY HOOK: schema = blueprint; migration = renovation; client = remote.
+Changed a field? Evolve DB + regenerate. New user? Call create; no migration.
